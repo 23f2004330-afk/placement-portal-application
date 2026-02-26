@@ -3,6 +3,8 @@ from config import Config
 from models import db, User
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from models import Drive
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -101,12 +103,16 @@ def admin_dashboard():
         return "Access Denied"
     return render_template("admin_dashboard.html")
 
+
+
 @app.route("/company/dashboard")
 @login_required
 def company_dashboard():
     if current_user.role != "company":
         return "Access Denied"
-    return "Company Dashboard"
+    return render_template("company_dashboard.html")
+
+
 
 @app.route("/student/dashboard")
 @login_required
@@ -191,6 +197,46 @@ def register_company():
         return redirect(url_for("login"))
 
     return render_template("register_company.html")
+
+
+
+
+
+@app.route("/company/create_drive", methods=["GET", "POST"])
+@login_required
+def create_drive():
+
+    if current_user.role != "company":
+        return "Access Denied"
+
+    if not current_user.approved:
+        return "Wait for admin approval"
+
+    if request.method == "POST":
+
+        title = request.form.get("title")
+        description = request.form.get("description")
+        eligibility = request.form.get("eligibility")
+        deadline = request.form.get("deadline")
+
+        new_drive = Drive(
+            company_id=current_user.id,
+            title=title,
+            description=description,
+            eligibility=eligibility,
+            deadline=datetime.strptime(deadline, "%Y-%m-%d"),
+            status="Pending"
+        )
+
+        db.session.add(new_drive)
+        db.session.commit()
+
+        flash("Drive created. Waiting for admin approval.")
+        return redirect(url_for("company_dashboard"))
+
+    return render_template("create_drive.html")
+
+
 
 
 if __name__ == "__main__":
