@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Student Dashboard</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-primary" href="{{ url_for('student_profile') }}">Edit Profile</a>
+        <a class="btn btn-outline-secondary" href="{{ url_for('student_history') }}">Application History</a>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">Approved Placement Drives</div>
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead><tr><th>ID</th><th>Company</th><th>Job Title</th><th>Deadline</th><th>Action</th></tr></thead>
+                    <tbody>
+                    {% for drive in drives %}
+                        <tr>
+                            <td>{{ drive.id }}</td>
+                            <td>{{ drive.company.name }}</td>
+                            <td>{{ drive.title }}</td>
+                            <td>{{ drive.deadline }}</td>
+                            <td><a class="btn btn-outline-primary btn-sm" href="{{ url_for('student_drive_details', drive_id=drive.id) }}">View</a></td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="5" class="text-center">No approved drives available.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">Your Applications</div>
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead><tr><th>Drive</th><th>Status</th></tr></thead>
+                    <tbody>
+                    {% for app in student_applications %}
+                        <tr><td>{{ app.drive.title }}</td><td>{{ app.status }}</td></tr>
+                    {% else %}
+                        <tr><td colspan="2" class="text-center">No applications yet.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

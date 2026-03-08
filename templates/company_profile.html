@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Company Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Company Profile</h2>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label">Company Name</label><input class="form-control" name="name" value="{{ current_user.name }}" required></div>
+                        <div class="col-md-6"><label class="form-label">Company Contact</label><input class="form-control" name="contact" value="{{ current_user.contact or '' }}"></div>
+                        <div class="col-md-6"><label class="form-label">Website</label><input class="form-control" type="url" name="website" value="{{ current_user.website or '' }}"></div>
+                        <div class="col-md-6"><label class="form-label">HR Contact</label><input class="form-control" name="hr_contact" value="{{ current_user.hr_contact or '' }}"></div>
+                    </div>
+                    <button class="btn btn-primary mt-3" type="submit">Save</button>
+                    <a class="btn btn-outline-secondary mt-3" href="{{ url_for('company_dashboard') }}">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Edit Drive{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Edit Drive #{{ drive.id }}</h2>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label">Job Title</label><input class="form-control" name="title" value="{{ drive.title }}" required></div>
+                        <div class="col-md-6"><label class="form-label">Eligibility Criteria</label><input class="form-control" name="eligibility" value="{{ drive.eligibility }}" required></div>
+                        <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location" value="{{ drive.location or '' }}"></div>
+                        <div class="col-md-6"><label class="form-label">Salary</label><input class="form-control" name="salary" value="{{ drive.salary or '' }}"></div>
+                        <div class="col-md-6"><label class="form-label">Application Deadline</label><input class="form-control" type="date" name="deadline" value="{{ drive.deadline.strftime('%Y-%m-%d') }}" required></div>
+                        <div class="col-12"><label class="form-label">Job Description</label><textarea class="form-control" name="description" rows="4" required>{{ drive.description }}</textarea></div>
+                    </div>
+                    <button class="btn btn-primary mt-3" type="submit">Save Changes</button>
+                    <a class="btn btn-outline-secondary mt-3" href="{{ url_for('company_dashboard') }}">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,8 +1,42 @@
-<h2>Company Registration</h2>
-
-<form method="POST">
-    <input name="name" placeholder="Company Name" required><br><br>
-    <input name="email" type="email" placeholder="Email" required><br><br>
-    <input name="password" type="password" placeholder="Password" required><br><br>
-    <button type="submit">Register</button>
-</form>
+{% extends "base.html" %}
+{% block title %}Company Registration{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Company Registration</h2>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Company Name</label>
+                            <input class="form-control" type="text" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" type="email" name="email" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Password</label>
+                            <input class="form-control" type="password" name="password" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Company Contact</label>
+                            <input class="form-control" type="text" name="contact">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Website</label>
+                            <input class="form-control" type="url" name="website">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">HR Contact Person</label>
+                            <input class="form-control" type="text" name="hr_contact">
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary mt-3" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

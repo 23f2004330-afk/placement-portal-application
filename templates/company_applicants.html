@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Applicants{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Applicants for {{ drive.title }}</h1>
+
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead><tr><th>ID</th><th>Student</th><th>Email</th><th>Resume</th><th>Applied On</th><th>Status</th><th>Update</th></tr></thead>
+            <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>{{ application.id }}</td>
+                    <td>{{ application.student.name }}</td>
+                    <td>{{ application.student.email }}</td>
+                    <td>
+                        {% if application.student.resume_filename %}
+                            <a href="{{ url_for('download_resume', filename=application.student.resume_filename) }}">Download</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{ application.applied_on.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ application.status }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('update_application_status', app_id=application.id) }}" class="d-flex gap-2">
+                            <select name="status" class="form-select form-select-sm" required>
+                                <option value="Shortlisted">Shortlisted</option>
+                                <option value="Selected">Selected</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                            <input class="form-control form-control-sm" name="remarks" placeholder="Remark">
+                            <button class="btn btn-primary btn-sm">Save</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="7" class="text-center">No applicants.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('company_dashboard') }}">Back</a>
+{% endblock %}

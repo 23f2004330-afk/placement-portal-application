@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Application History{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Student Application History</h1>
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead><tr><th>Drive</th><th>Company</th><th>Status</th><th>Applied On</th></tr></thead>
+            <tbody>
+            {% for app in applications %}
+                <tr>
+                    <td>{{ app.drive.title }}</td>
+                    <td>{{ app.drive.company.name }}</td>
+                    <td>{{ app.status }}</td>
+                    <td>{{ app.applied_on.strftime('%Y-%m-%d') }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4" class="text-center">No applications yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('student_dashboard') }}">Back</a>
+{% endblock %}

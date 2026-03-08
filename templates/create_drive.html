@@ -1,9 +1,25 @@
-<h2>Create Placement Drive</h2>
-
-<form method="POST">
-    <input name="title" placeholder="Job Title" required>
-    <textarea name="description" placeholder="Job Description" required></textarea>
-    <input name="eligibility" placeholder="Eligibility Criteria" required>
-    <input type="date" name="deadline" required>
-    <button type="submit">Create Drive</button>
-</form>
+{% extends "base.html" %}
+{% block title %}Create Drive{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Create Placement Drive</h2>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label">Job Title</label><input class="form-control" name="title" required></div>
+                        <div class="col-md-6"><label class="form-label">Eligibility Criteria</label><input class="form-control" name="eligibility" required></div>
+                        <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location"></div>
+                        <div class="col-md-6"><label class="form-label">Salary</label><input class="form-control" name="salary"></div>
+                        <div class="col-md-6"><label class="form-label">Application Deadline</label><input class="form-control" type="date" name="deadline" required></div>
+                        <div class="col-12"><label class="form-label">Job Description</label><textarea class="form-control" name="description" rows="4" required></textarea></div>
+                    </div>
+                    <button class="btn btn-primary mt-3" type="submit">Create Drive</button>
+                    <a class="btn btn-outline-secondary mt-3" href="{{ url_for('company_dashboard') }}">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

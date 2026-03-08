@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Application Details{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="h4">Application #{{ application.id }}</h1>
+        <p><strong>Student:</strong> {{ application.student.name }} ({{ application.student.email }})</p>
+        <p><strong>Drive:</strong> {{ application.drive.title }}</p>
+        <p><strong>Status:</strong> {{ application.status }}</p>
+        <p><strong>Applied On:</strong> {{ application.applied_on.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Remarks:</strong> {{ application.remarks or '-' }}</p>
+        {% if application.student.resume_filename %}
+            <p><strong>Resume:</strong> <a href="{{ url_for('download_resume', filename=application.student.resume_filename) }}">Download</a></p>
+        {% endif %}
+    </div>
+</div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('admin_dashboard') }}">Back</a>
+{% endblock %}

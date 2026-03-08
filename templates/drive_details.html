@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Drive Details{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="h4">{{ drive.title }}</h1>
+        <p><strong>Company:</strong> {{ drive.company.name }}</p>
+        <p><strong>Description:</strong><br>{{ drive.description }}</p>
+        <p><strong>Eligibility:</strong> {{ drive.eligibility }}</p>
+        <p><strong>Salary:</strong> {{ drive.salary or '-' }}</p>
+        <p><strong>Location:</strong> {{ drive.location or '-' }}</p>
+        <p><strong>Deadline:</strong> {{ drive.deadline }}</p>
+        <p><strong>Status:</strong> {{ drive.status }}</p>
+    </div>
+</div>
+<a class="btn btn-outline-secondary mt-3" href="{{ url_for('admin_dashboard') }}">Back</a>
+{% endblock %}
