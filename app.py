@@ -138,9 +138,18 @@ def register_student():
         department = request.form.get("department", "").strip()
         cgpa = request.form.get("cgpa", "").strip()
         grad_year = request.form.get("grad_year", "").strip()
+        resume = request.files.get("resume")
 
         if User.query.filter_by(email=email).first():
             flash("Email already exists.")
+            return redirect(url_for("register_student"))
+
+        if not resume or not resume.filename:
+            flash("Resume upload is required.")
+            return redirect(url_for("register_student"))
+
+        if not is_allowed_resume(resume.filename):
+            flash("Resume must be PDF/DOC/DOCX.")
             return redirect(url_for("register_student"))
 
         student = User(
@@ -155,6 +164,12 @@ def register_student():
             grad_year=int(grad_year) if grad_year else None,
         )
         db.session.add(student)
+        db.session.flush()
+
+        filename = secure_filename(f"{student.id}_{int(datetime.utcnow().timestamp())}_{resume.filename}")
+        resume.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        student.resume_filename = filename
+
         db.session.commit()
         flash("Student registration successful. Please login.")
         return redirect(url_for("login"))

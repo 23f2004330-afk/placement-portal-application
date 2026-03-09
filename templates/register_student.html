@@ -6,7 +6,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <h2 class="h4 mb-3">Student Registration</h2>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Full Name</label>
@@ -35,6 +35,10 @@
                         <div class="col-md-3">
                             <label class="form-label">Graduation Year</label>
                             <input class="form-control" type="number" min="2020" max="2100" name="grad_year">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Resume (PDF/DOC/DOCX)</label>
+                            <input class="form-control" type="file" name="resume" accept=".pdf,.doc,.docx" required>
                         </div>
                     </div>
                     <button class="btn btn-success mt-3" type="submit">Register</button>
